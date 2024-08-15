@@ -1,0 +1,41 @@
+version: '3.4'
+
+services:
+ # client-rce:
+ #   image: ${DOCKER_REGISTRY-}client-rce
+ #   build:
+ #     context: .
+ #     dockerfile: client-rce/Dockerfile
+ #   environment:
+ #     NODE_ENV: dev
+ #   ports:
+ #     - 3000:5173
+
+  rabbitmq:
+    image: "rabbitmq:3-management-alpine"
+    container_name: judge-mq
+    restart: always
+    ports:
+        - "5672:5672"
+        - "15672:15672"
+
+  redis-server:
+    image: "redis:alpine"
+    container_name: cache
+    restart: always
+    ports: 
+      - "6379:6379"
+
+  server:
+    image: ${DOCKER_REGISTRY-}server
+    build:
+      context: .
+      dockerfile: server/Dockerfile
+
+
+  workers:
+    image: ${DOCKER_REGISTRY-}workers
+    build:
+      context: .
+      dockerfile: workers/Dockerfile
+

@@ -1,0 +1,25 @@
+version: '3.4'
+
+services:
+  server:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=5000
+      - "CacheSetting:ConnectionString=redis-server:6379"
+      - "MessageBroker:HostAddress=amqp://guest:guest@rabbitmq:5672"
+    depends_on:
+        - rabbitmq
+        - redis-server
+    ports:
+      - "5000:5000"
+
+  workers:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - "CacheSetting:ConnectionString=redis-server:6379"
+      - "MessageBroker:HostAddress=amqp://guest:guest@rabbitmq:5672"
+    depends_on:
+        - rabbitmq
+        - redis-server
+
