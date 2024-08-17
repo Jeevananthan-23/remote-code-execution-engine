@@ -46,11 +46,11 @@ RUN npm -v
 
 # Create a directory for your application and copy the project files
 WORKDIR /src
-COPY ["workers/Workers.csproj", "workers/"]
-COPY ["Shared/Shared.csproj", "Shared/"]
-RUN dotnet restore "./workers/./Workers.csproj"
+COPY ["src/Workers/Workers.csproj", "src/Workers/"]
+COPY ["src/Shared/Shared.csproj", "src/Shared/"]
+RUN dotnet restore "./src/Workers/./Workers.csproj"
 COPY . .
-WORKDIR "/src/workers"
+WORKDIR "/src/src/Workers"
 RUN dotnet build "./Workers.csproj" -c Release -o /app/build
 
 # Restore and build the project

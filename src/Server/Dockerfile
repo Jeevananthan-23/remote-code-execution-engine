@@ -3,16 +3,16 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 USER app
 WORKDIR /app
-EXPOSE 5000
+EXPOSE 8080
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["server/Server.csproj", "server/"]
-COPY ["Shared/Shared.csproj", "Shared/"]
-RUN dotnet restore "./server/./Server.csproj"
+COPY ["src/Server/Server.csproj", "src/Server/"]
+COPY ["src/Shared/Shared.csproj", "src/Shared/"]
+RUN dotnet restore "./src/Server/./Server.csproj"
 COPY . .
-WORKDIR "/src/server"
+WORKDIR "/src/src/Server"
 RUN dotnet build "./Server.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish

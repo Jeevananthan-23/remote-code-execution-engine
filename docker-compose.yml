@@ -30,12 +30,12 @@ services:
     image: ${DOCKER_REGISTRY-}server
     build:
       context: .
-      dockerfile: server/Dockerfile
+      dockerfile: src/Server/Dockerfile
 
 
   workers:
     image: ${DOCKER_REGISTRY-}workers
     build:
       context: .
-      dockerfile: workers/Dockerfile
+      dockerfile: src/Workers/Dockerfile
 
